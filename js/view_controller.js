@@ -2,30 +2,60 @@
 /* View- Controller */
 
 /* Der Plan
-    Einlesen Daten von Webseite ::
-	Check Daten ::
-    Btn. Trigger ::
-    Business-Logic (Alter --> Getränk) :: 
-    Bild austauschen ::                                     check!!!!!!!!!!
+    Einlesen Daten von Webseite ::                          check!!!!!
+	Check Daten ::                                          check!!!!!
+    Btn. Trigger ::                                         check!!!!!
+    Business-Logic (Alter --> Getränk) ::                   check!!!!!
+    Bild austauschen ::                                     check!!!!!
 */
 
 // Modul: Ablaufsteuerung | Test:
 // controller();
 function controller() {
-    output(updateImg(checkAge()));
+    output(updateImg(checkAge(getInput())));
+}
+// Trigger - BtnClick
+const btn = document.getElementById("trigBtn");
+btn.addEventListener("click",actOnClick);
+
+// Trigger - Input
+const field = document.getElementsByName("eingabe")[0];
+field.addEventListener("input",isInputValid);
+
+// Event-Dispatcher
+function actOnClick() {
+    if (isInputValid()) {
+        controller();
+    } else {
+        output("Input nicht korrekt!");
+    }
 }
 
+function isInputValid() {
+    let inputStr = field.value
+    let patt = /^[0-9]{1,3}$/g;
+    let cond = patt.test(inputStr);
+    
+    if (!cond) {        // Fehlerbehandlung
+        field.value = "";
+        updateImg(data.default.bev);
+    }
+
+    return cond;
+}
+
+// 4. Modul: Eingabe
 function getInput() {
-    return 4;
+    return parseInt(field.value);
 }
 
-// Modul: Business-Logic (Mapping) | Test:
-output(checkAge(2));
-output(checkAge(7));
-output(checkAge(13));
-output(checkAge(18));
-output(checkAge(99));
-output(checkAge(135));
+// 3. Modul: Business-Logic (Mapping) | Test:
+// output(checkAge(2));
+// output(checkAge(7));
+// output(checkAge(13));
+// output(checkAge(18));
+// output(checkAge(99));
+// output(checkAge(135));
 function checkAge(age) {
  
     switch (true) {
@@ -42,7 +72,7 @@ function checkAge(age) {
     }
 }
 
-// Modul: Bild aktualisieren | Test:
+// 2. Modul: Bild aktualisieren | Test:
 // output(updateImg("cola"));
 // output(updateImg("milch"));
 //output(updateImg("wein"));
@@ -52,7 +82,7 @@ function updateImg(imgName) {
     return imgName // Monitoring
 }
 
-//Modul: Konsolenausgabe --> Test:
+// 1. Modul: Konsolenausgabe --> Test:
 function output(outputData) {
     console.log(outputData);
 }
