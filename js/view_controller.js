@@ -1,28 +1,22 @@
-
 /* View- Controller */
 
 /* Der Plan
-    Einlesen Daten von Webseite ::                          check!!!!!
-	Check Daten ::                                          check!!!!!
-    Btn. Trigger ::                                         check!!!!!
-    Business-Logic (Alter --> Getränk) ::                   check!!!!!
-    Bild austauschen ::                                     check!!!!!
+    Einlesen Daten von Webseite :: check!
+	Check Daten :: check!
+    Btn. Trigger :: check!
+    Business-Logic (Alter --> Getränk) :: check!
+    Bild austauschen :: check!
 */
 
-// Modul: Ablaufsteuerung | Test:
+/***  Ablaufsteuerung | Control */  
+
+// 5. Modul Ablaufsteuerung | Test:
 // controller();
 function controller() {
     output(updateImg(checkAge(getInput())));
 }
-// Trigger - BtnClick
-const btn = document.getElementById("trigBtn");
-btn.addEventListener("click",actOnClick);
 
-// Trigger - Input
-const field = document.getElementsByName("eingabe")[0];
-field.addEventListener("input",isInputValid);
-
-// Event-Dispatcher
+// 5b. Event-Dispatcher
 function actOnClick() {
     if (isInputValid()) {
         controller();
@@ -31,23 +25,39 @@ function actOnClick() {
     }
 }
 
+// 5c. Trigger - BtnClick 
+const btn = document.getElementById("trigBtn");
+btn.addEventListener("click",actOnClick);
+
+
+/***  Eingabe | Check auf Datenintegrität */  
+
+//4. Modul: Eingabe
+function getInput() {
+   return parseInt(field.value); 
+}
+
+//4a.  Modul: Check auf korrekte Eingaben ...
 function isInputValid() {
+
     let inputStr = field.value
-    let patt = /^[0-9]{1,3}$/g;
+    let patt = /^[0-9]{1,3}$/g; 
     let cond = patt.test(inputStr);
-    
-    if (!cond) {        // Fehlerbehandlung
-        field.value = "";
-        updateImg(data.default.bev);
+
+    if (!cond) {  // Fehlerbehandlung
+       field.value = "";
+       updateImg(data.default.bev);
     }
 
     return cond;
 }
 
-// 4. Modul: Eingabe
-function getInput() {
-    return parseInt(field.value);
-}
+// 4c. Trigger - Input
+const field = document.getElementsByName("eingabe")[0];
+field.addEventListener("input",isInputValid);
+
+
+/***  Business-Logic */ 
 
 // 3. Modul: Business-Logic (Mapping) | Test:
 // output(checkAge(2));
@@ -71,6 +81,8 @@ function checkAge(age) {
             return data.default.bev;
     }
 }
+
+/***** View-Schicht aktualisieren *****/
 
 // 2. Modul: Bild aktualisieren | Test:
 // output(updateImg("cola"));
